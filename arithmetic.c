@@ -1,5 +1,8 @@
+//Ctrl K + Ctrl F for correct indentation.
+
 #define _CRT_SECURE_NO_WARNINGS
-#include "NLFile.h" //Ctrl K + Ctrl F for correct indentation.
+
+#include "functions.h" 
 void Shuffle(TableStructure *theTable)
 {
 	int pickColNum, numLeftToShuffle, i, temp;
