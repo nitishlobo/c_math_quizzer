@@ -1,8 +1,7 @@
-//Ctrl K + Ctrl F for correct indentation.
-
 #define _CRT_SECURE_NO_WARNINGS
+#include "functions.h"
+#include <time.h>
 
-#include "functions.h" 
 void Shuffle(TableStructure *theTable)
 {
 	int pickColNum, numLeftToShuffle, i, temp;
@@ -60,9 +59,12 @@ int CalculatePoints(TableStructure *theTable, int askRow, int askCol, int correc
 }
 
 int main(void) {
+	FILE *pFile;
 	TableStructure divTable, mulTable, addTable, subTable; //Decalaring variables.
 	int i, j, askRow, askCol, invalidTable, totalNumOfQuestionsLeft, points, totalPoints;
 	int correctAns, enteredAns;
+	clock_t startingTime, finishTime;
+	double timeSpent;
 
 	enteredAns = 0;
 
@@ -70,7 +72,8 @@ int main(void) {
 	printf("\n\t\t   << Hello user. The Arithmetic Tester has been activated. >>\n"); //Displaying message to user.
 	printf("\n\t<< A special thanks to Jesus Christ, my friend for inspiring me in this project. >>\n");
 	printf("\t   << Also, thank you to Dipesh Trikam, Manmeet Singh and Nirojan Jayananthan. >>\n");
-	printf("\n\nStarted recording the time.\n");
+	printf("\n\nStarting to record the time.\n");
+	startingTime = clock();
 
 	srand((unsigned int) time(NULL)); //Setting the seed to be able to generate random numbers.
 
@@ -106,7 +109,8 @@ int main(void) {
 	Shuffle(&addTable);
 	Shuffle(&subTable);
 
-	totalNumOfQuestionsLeft = 121*4; //Setting the total number of questions in the entire program.
+	//totalNumOfQuestionsLeft = 121*4; //Setting the total number of questions in the entire program.
+	totalNumOfQuestionsLeft = 3;
 	totalPoints = 0; //Setting the total number of points to 0.
 	while (totalNumOfQuestionsLeft > 0) { //All the initialising has been finished. The rest of the code that follows after this line is to ask the user a arithmetic question.
 		invalidTable = 1; //Setting the table as invalid selection for each iteration.
@@ -169,7 +173,21 @@ int main(void) {
 		printf("\n     < %d questions done. >\n", 484 - totalNumOfQuestionsLeft);
 		printf("     < %d questions remaining. >\n", totalNumOfQuestionsLeft);
 	}
+	//Capturing finish time and calculating time elapsed
+	finishTime = clock();
+	timeSpent = (((double)(finishTime - startingTime))/CLOCKS_PER_SEC)/60; //CLOCKS_PER_SEC constant is used from the <time.h> file
+	printf("\n     < Time you took in minutes is: %.2f >", timeSpent);
 
-	printf("\n\n<<===== End of program. Please record the score and time. =====>>\n");
-	scanf("%d", enteredAns);
+	//Exporting time to previousTimes.txt file
+	pFile = fopen("previousTimes.txt","a");
+	if (pFile==NULL) {
+		printf("Error opening file.");
+	} else {
+		fprintf(pFile, "%.2f\n", timeSpent);
+	}
+	fclose(pFile);
+
+	printf("\n\n<<===== End of program. Recorded the time. =====>>\n");
+	printf("<<===== Type any letter and hit enter to exit. =====>>\n");
+	scanf("%d", &enteredAns);
 }
