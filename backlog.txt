@@ -1,0 +1,3 @@
+* Add feature/timer - counts user run time and appends this to a file
+* Add feature/move-functions-to-header-file - move all functions to header file from .c file
+* Add feature/display-best-time - displays best user run time
