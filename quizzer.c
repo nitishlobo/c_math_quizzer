@@ -109,8 +109,7 @@ int main(void) {
 	Shuffle(&addTable);
 	Shuffle(&subTable);
 
-	//totalNumOfQuestionsLeft = 121*4; //Setting the total number of questions in the entire program.
-	totalNumOfQuestionsLeft = 3;
+	totalNumOfQuestionsLeft = 121*4; //Setting the total number of questions in the entire program.
 	totalPoints = 0; //Setting the total number of points to 0.
 	while (totalNumOfQuestionsLeft > 0) { //All the initialising has been finished. The rest of the code that follows after this line is to ask the user a arithmetic question.
 		points = 0; //Setting the number of points to 0 by default in each iteration.
