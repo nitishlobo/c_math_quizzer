@@ -1,5 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "NLFile.h" //Ctrl K + Ctrl F for correct indentation.
+#include "functions.h"
+#include <time.h>
+
 void Shuffle(TableStructure *theTable)
 {
 	int pickColNum, numLeftToShuffle, i, temp;
@@ -57,9 +59,12 @@ int CalculatePoints(TableStructure *theTable, int askRow, int askCol, int correc
 }
 
 int main(void) {
+	FILE *pFile;
 	TableStructure divTable, mulTable, addTable, subTable; //Decalaring variables.
-	int i, j, askRow, askCol, invalidTable, totalNumOfQuestionsLeft, points, totalPoints;
+	int i, j, askRow, askCol, totalNumOfQuestionsLeft, points, totalPoints;
 	int correctAns, enteredAns;
+	clock_t startingTime, finishTime;
+	double timeSpent;
 
 	enteredAns = 0;
 
@@ -67,7 +72,8 @@ int main(void) {
 	printf("\n\t\t   << Hello user. The Arithmetic Tester has been activated. >>\n"); //Displaying message to user.
 	printf("\n\t<< A special thanks to Jesus Christ, my friend for inspiring me in this project. >>\n");
 	printf("\t   << Also, thank you to Dipesh Trikam, Manmeet Singh and Nirojan Jayananthan. >>\n");
-	printf("\n\nStarted recording the time.\n");
+	printf("\n\nStarting to record the time.\n");
+	startingTime = clock();
 
 	srand((unsigned int) time(NULL)); //Setting the seed to be able to generate random numbers.
 
@@ -103,60 +109,54 @@ int main(void) {
 	Shuffle(&addTable);
 	Shuffle(&subTable);
 
-	totalNumOfQuestionsLeft = 121*4; //Setting the total number of questions in the entire program.
+	//totalNumOfQuestionsLeft = 121*4; //Setting the total number of questions in the entire program.
+	totalNumOfQuestionsLeft = 3;
 	totalPoints = 0; //Setting the total number of points to 0.
 	while (totalNumOfQuestionsLeft > 0) { //All the initialising has been finished. The rest of the code that follows after this line is to ask the user a arithmetic question.
-		invalidTable = 1; //Setting the table as invalid selection for each iteration.
 		points = 0; //Setting the number of points to 0 by default in each iteration.
-		while (invalidTable == 1) {
-			i = rand() % 4; //i decides which type of question will be asked out of division, multiplication, addition & subtraction.
-			if (i == 0) {
-				if (divTable.qLeftTotal > 0) {
-					invalidTable = 0; //Setting the table selection to be valid.
-					askRow = RowPicker(&divTable); //Selecting a random row and column in the nums array to ask the user a question.
-					askCol = rand() % divTable.qLeftInRow[askRow][0];
+		i = rand() % 4; //i decides which type of question will be asked out of division, multiplication, addition & subtraction.
+		if (i == 0) {
+			if (divTable.qLeftTotal > 0) {
+				askRow = RowPicker(&divTable); //Selecting a random row and column in the nums array to ask the user a question.
+				askCol = rand() % divTable.qLeftInRow[askRow][0];
 
-					correctAns = divTable.nums[askRow][askCol]; //Computing the correct answer to the division problem.
+				correctAns = divTable.nums[askRow][askCol]; //Computing the correct answer to the division problem.
 
-					//Displaying the division problem to the user and prompting the user to enter an answer.
-					printf("\n%d / %d = ", (divTable.nums[askRow][askCol])*(divTable.qHeaderNum[askRow][0]), (divTable.qHeaderNum[askRow][0]));
-					scanf("%d", &enteredAns);
-					points = CalculatePoints(&divTable, askRow, askCol, correctAns, enteredAns); //Calculating points.
-				}
-			} else if (i == 1) {
-				if (mulTable.qLeftTotal > 0) {
-					invalidTable = 0;
-					askRow = RowPicker(&mulTable);
-					askCol = rand() % mulTable.qLeftInRow[askRow][0];
-					correctAns = (mulTable.qHeaderNum[askRow][0]) * (mulTable.nums[askRow][askCol]);
-					printf("\n%d * %d = ", mulTable.qHeaderNum[askRow][0], mulTable.nums[askRow][askCol]);
-					scanf("%d", &enteredAns);
-					points = CalculatePoints(&mulTable, askRow, askCol, correctAns, enteredAns);
-				}
-			} else if (i == 2) {
-				if (addTable.qLeftTotal > 0) {
-					invalidTable = 0;
-					askRow = RowPicker(&addTable);
-					askCol = rand() % addTable.qLeftInRow[askRow][0];
+				//Displaying the division problem to the user and prompting the user to enter an answer.
+				printf("\n%d / %d = ", (divTable.nums[askRow][askCol])*(divTable.qHeaderNum[askRow][0]), (divTable.qHeaderNum[askRow][0]));
+				scanf("%d", &enteredAns);
+				points = CalculatePoints(&divTable, askRow, askCol, correctAns, enteredAns); //Calculating points.
+			}
+		} else if (i == 1) {
+			if (mulTable.qLeftTotal > 0) {
+				askRow = RowPicker(&mulTable);
+				askCol = rand() % mulTable.qLeftInRow[askRow][0];
+				correctAns = (mulTable.qHeaderNum[askRow][0]) * (mulTable.nums[askRow][askCol]);
+				printf("\n%d * %d = ", mulTable.qHeaderNum[askRow][0], mulTable.nums[askRow][askCol]);
+				scanf("%d", &enteredAns);
+				points = CalculatePoints(&mulTable, askRow, askCol, correctAns, enteredAns);
+			}
+		} else if (i == 2) {
+			if (addTable.qLeftTotal > 0) {
+				askRow = RowPicker(&addTable);
+				askCol = rand() % addTable.qLeftInRow[askRow][0];
 
-					//Computing the correct answer to the addition problem.
-					correctAns = (addTable.qHeaderNum[askRow][0]) + (addTable.nums[askRow][askCol]);
-					printf("\n%d + %d = ", addTable.qHeaderNum[askRow][0], addTable.nums[askRow][askCol]);
-					scanf("%d", &enteredAns);
-					points = CalculatePoints(&addTable, askRow, askCol, correctAns, enteredAns);
-				}
-			} else if (i == 3) {
-				if (subTable.qLeftTotal > 0) {
-					invalidTable = 0;
-					askRow = RowPicker(&subTable);
-					askCol = rand() % subTable.qLeftInRow[askRow][0];
+				//Computing the correct answer to the addition problem.
+				correctAns = (addTable.qHeaderNum[askRow][0]) + (addTable.nums[askRow][askCol]);
+				printf("\n%d + %d = ", addTable.qHeaderNum[askRow][0], addTable.nums[askRow][askCol]);
+				scanf("%d", &enteredAns);
+				points = CalculatePoints(&addTable, askRow, askCol, correctAns, enteredAns);
+			}
+		} else if (i == 3) {
+			if (subTable.qLeftTotal > 0) {
+				askRow = RowPicker(&subTable);
+				askCol = rand() % subTable.qLeftInRow[askRow][0];
 
-					//Computing the correct answer to the subtraction problem.
-					correctAns = (subTable.qHeaderNum[askRow][0]) - (subTable.nums[askRow][askCol]);
-					printf("\n%d - %d = ", subTable.qHeaderNum[askRow][0], subTable.nums[askRow][askCol]);
-					scanf("%d", &enteredAns);
-					points = CalculatePoints(&subTable, askRow, askCol, correctAns, enteredAns);
-				}
+				//Computing the correct answer to the subtraction problem.
+				correctAns = (subTable.qHeaderNum[askRow][0]) - (subTable.nums[askRow][askCol]);
+				printf("\n%d - %d = ", subTable.qHeaderNum[askRow][0], subTable.nums[askRow][askCol]);
+				scanf("%d", &enteredAns);
+				points = CalculatePoints(&subTable, askRow, askCol, correctAns, enteredAns);
 			}
 		}
 		totalPoints = totalPoints + points; //Calculating total # of points and decrementing no. of questions by 1.
@@ -166,7 +166,21 @@ int main(void) {
 		printf("\n     < %d questions done. >\n", 484 - totalNumOfQuestionsLeft);
 		printf("     < %d questions remaining. >\n", totalNumOfQuestionsLeft);
 	}
+	//Capturing finish time and calculating time elapsed
+	finishTime = clock();
+	timeSpent = (((double)(finishTime - startingTime))/CLOCKS_PER_SEC)/60; //CLOCKS_PER_SEC constant is used from the <time.h> file
+	printf("\n     < Time you took in minutes is: %.2f >", timeSpent);
 
-	printf("\n\n<<===== End of program. Please record the score and time. =====>>\n");
-	scanf("%d", enteredAns);
+	//Exporting time to previousTimes.txt file
+	pFile = fopen("previousTimes.txt","a");
+	if (pFile==NULL) {
+		printf("Error opening file.");
+	} else {
+		fprintf(pFile, "%d, %.2f\n", totalPoints, timeSpent);
+	}
+	fclose(pFile);
+
+	printf("\n\n<<===== End of program. Recorded the total points earned and time. =====>>\n");
+	printf("<<===== Type any letter and hit enter to exit. =====>>\n");
+	scanf("%d", &enteredAns);
 }
