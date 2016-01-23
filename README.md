@@ -19,4 +19,4 @@
 <h2> Run Instructions </h2>
 The program can be run by downloading a local copy and double clicking the executable Quizzer.exe </br>
 I hope you enjoy this program as much as I have. </br>
-Good luck!   :)
+<pre> Good luck!    :)</pre>
