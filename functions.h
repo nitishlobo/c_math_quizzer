@@ -5,8 +5,8 @@
 #include <time.h>
 
 typedef struct {
-	int qLeftTotal;
-	int qLeftInRow[11][1]; //qLeft indicates the number of questions left.
-	int qHeaderNum[11][1];
-	int nums[11][11];
+	int qLeftTotal; //Total questions left
+	int qLeftInRow[11][1]; //Number of questions left in row
+	int qHeaderNum[11][1]; //Contains the first part of the question to ask user
+	int nums[11][11]; //Contains the second part of the question to ask user
 } TableStructure;
