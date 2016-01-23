@@ -1,5 +1,5 @@
 # Math Quizzing Software
-<h3> Introduction </h3>
+<h3>Introduction </h3>
 
 <p>
   Some say they are good at maths, other's say its like learning japanese... </br>
@@ -16,7 +16,7 @@
   there is still more work that can be done to improve the project.
 </p>
 
-<h2> Run Instructions </h2>
+<h3>Run Instructions </h3>
 The program can be run by downloading a local copy and double clicking the executable Quizzer.exe </br>
 I hope you enjoy this program as much as I have. </br>
 Good luck! </br>
