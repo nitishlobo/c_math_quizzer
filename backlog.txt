@@ -1,7 +1,7 @@
 * Add feature/timer - counts user run time and appends this to a file + remove invalidTable variable - DONE
-* Add feature/obj-oriented - pass pointers rather than repeating code
-* Rename all variables to a more appropriate name
-* Add feature/move-functions-to-header-file - move all functions to header file from .c file
+* Add feature/obj-oriented - pass pointers rather than repeating code - DONE
+* Rename all variables to a more appropriate name - DONE
+* Add feature/move-functions-to-header-file - move all functions to header file from .c file - Turns out in my case it would be slightly pointless.
 * Add feature/display-best-time - displays best user run time
 
 
