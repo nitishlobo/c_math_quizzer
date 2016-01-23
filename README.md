@@ -7,7 +7,5 @@ It asks its users arithmetic questions, times and scores them.
 
 Though the software is fully functional,
 there is still more work that can be done to improve the project.
-In light that I have achieved what I orginally set out to do in this project,
-I have decided to pursue my next project.
-
 The program can be run by downloading a local copy and double clicking the executable Quizzer.exe
+I hope you enjoy this program as much as I have. :) Good luck!
